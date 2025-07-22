@@ -1,0 +1,53 @@
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+.vscode/
+*.code-workspace
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# IIS/ASP.NET
+*.dbmdl
+*.pdb
+*.cache
+*.log
+
+# Entity Framework
+Migrations/
+
+# Rider
+.idea/
+
+# System-specific
+Thumbs.db
+Desktop.ini
+
+# VS Code local history
+.history/
+
+# macOS / Linux
+.DS_Store
+*.swp
+
+# Others
+*.vsidx
+*.pidb
+*.sdf
+*.suo
+*.userprefs
+
+# Blazor cache
+wwwroot/css/app.css
+wwwroot/css/app.css.map
