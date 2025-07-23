@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelecomCRM.Domain", "TelecomCRM.Domain\TelecomCRM.Domain.csproj", "{D7446EE9-9C24-4814-9828-233FA921E606}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelecomCRM.Infrastructure", "TelecomCRM.Infrastructure\TelecomCRM.Infrastructure.csproj", "{11E00CAF-C96A-4ADF-B49E-7B2EB5EE1EDE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D7446EE9-9C24-4814-9828-233FA921E606} = {D7446EE9-9C24-4814-9828-233FA921E606}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelecomCRM.Tests", "TelecomCRM.Tests\TelecomCRM.Tests.csproj", "{B377DD1C-714F-4121-99DD-1D133C3BA465}"
 EndProject
