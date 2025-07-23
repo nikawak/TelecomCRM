@@ -18,4 +18,10 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\" />
+    <Folder Include="Services\" />
+    <Folder Include="TestUtils\" />
+  </ItemGroup>
+
 </Project>
