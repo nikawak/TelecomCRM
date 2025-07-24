@@ -11,9 +11,9 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 
 // Здесь указываем адрес API сервера (например, localhost)
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5144/") });
 
 // Регистрируем свои сервисы (например, API клиенты)
-builder.Services.AddScoped<ICustomerApiClient, CustomerApiClientMock>();
+builder.Services.AddScoped<ICustomerApiClient, CustomerApiClient>();
 
 await builder.Build().RunAsync();

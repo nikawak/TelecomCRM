@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -24,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Auth\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
@@ -32,7 +32,6 @@
     <ProjectReference Include="..\TelecomCRM.Application\TelecomCRM.Application.csproj" />
     <ProjectReference Include="..\TelecomCRM.Domain\TelecomCRM.Domain.csproj" />
     <ProjectReference Include="..\TelecomCRM.Infrastructure\TelecomCRM.Infrastructure.csproj" />
-	<ProjectReference Include="..\TelecomCRM.WebClient\TelecomCRM.WebClient.csproj" />
   </ItemGroup>
 
 </Project>

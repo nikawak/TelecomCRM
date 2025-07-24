@@ -1,39 +1,27 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">TelecomCRM.WebClient</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
+﻿<!-- Shared/NavMenu.razor -->
+<div class="sidebar bg-dark text-white d-flex flex-column p-3" style="width: 250px; height: 100vh; position: fixed;">
+    <h4 class="text-white mb-4">📡 Telecom CRM</h4>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/">
+                <i class="bi bi-house-door-fill me-2"></i> Главная
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/profile">
+                <i class="bi bi-person-circle me-2"></i> Личный кабинет
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/customers">
+                <i class="bi bi-bag-check me-2"></i> Клиенты
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/support">
+                <i class="bi bi-headset me-2"></i> Поддержка
+            </NavLink>
+        </li>
+    </ul>
 </div>
-
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}

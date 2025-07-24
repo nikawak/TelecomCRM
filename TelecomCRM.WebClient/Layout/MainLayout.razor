@@ -1,16 +1,16 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<div class="d-flex">
+    <NavMenu />
 
-        <article class="content px-4">
+    <!-- Сдвигаем контент, чтобы не налезал на фиксированный sidebar -->
+    <div class="flex-grow-1" style="margin-left: 250px;">
+        <header class="bg-primary text-white p-3">
+            <h4 class="mb-0">Telecom CRM</h4>
+        </header>
+
+        <main class="p-4">
             @Body
-        </article>
-    </main>
+        </main>
+    </div>
 </div>

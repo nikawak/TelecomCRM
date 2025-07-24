@@ -10,11 +10,15 @@
     <Folder Include="Behaviors\" />
     <Folder Include="Commands\" />
     <Folder Include="Intefaces\" />
-    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TelecomCRM.Domain\TelecomCRM.Domain.csproj" />
+    <ProjectReference Include="..\TelecomCRM.Infrastructure\TelecomCRM.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
