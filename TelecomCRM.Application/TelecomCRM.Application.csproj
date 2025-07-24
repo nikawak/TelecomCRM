@@ -13,4 +13,8 @@
     <Folder Include="Queries\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TelecomCRM.Domain\TelecomCRM.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

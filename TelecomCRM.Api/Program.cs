@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TelecomCRM.Infrastructure.Data;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // 🔹 Add DbContext
@@ -27,6 +26,10 @@ if (app.Environment.IsDevelopment())
 // 🔹 Middleware
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 
 // 🔹 Routing
 app.MapControllers();

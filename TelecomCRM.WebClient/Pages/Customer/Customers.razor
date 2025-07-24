@@ -1,0 +1,32 @@
+﻿@page "/customers"
+@using TelecomCRM.WebClient.ApiClients.Interfaces
+@inject ICustomerApiClient CustomerApiClient
+
+<h3>Customers</h3>
+
+@if (customers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (customers.Count == 0)
+{
+    <p>No customers found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var customer in customers)
+        {
+            <li>@customer.Name</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<CustomerDto> customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await CustomerApiClient.GetCustomersAsync();
+    }
+}
