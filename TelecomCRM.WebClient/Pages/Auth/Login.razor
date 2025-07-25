@@ -1,0 +1,33 @@
+﻿@page "/login"
+@using TelecomCRM.WebClient.ApiClients
+@using TelecomCRM.WebClient.DTOs
+
+<EditForm Model="loginModel" OnValidSubmit="HandleLogin" class="w-100" style="max-width: 400px; margin: auto; margin-top: 50px;">
+    <DataAnnotationsValidator />   
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <InputText id="email" class="form-control" @bind-Value="loginModel.Email" />
+        <ValidationMessage For="@(() => loginModel.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Пароль</label>
+        <InputText id="password" class="form-control" @bind-Value="loginModel.Password" type="password" />
+        <ValidationMessage For="@(() => loginModel.Password)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Войти</button>
+</EditForm>
+
+@code {
+    private LoginDTO loginModel = new();
+    [Inject] public AuthApiClient AuthClient { get; set; }
+    [Inject] public NavigationManager Navigation { get; set; }
+
+    private async Task HandleLogin()
+    {
+        if (await AuthClient.Register(loginModel))
+            Navigation.NavigateTo("/");
+    }
+}

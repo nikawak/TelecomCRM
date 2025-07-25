@@ -1,7 +1,9 @@
-﻿namespace TelecomCRM.WebClient.ApiClients.Interfaces
+﻿using TelecomCRM.WebClient.DTOs;
+
+namespace TelecomCRM.WebClient.ApiClients.Interfaces
 {
     public interface ICustomerApiClient
     {
-        Task<List<CustomerDto>> GetCustomersAsync();
+        Task<List<CustomerDTO>> GetCustomersAsync();
     }
 }

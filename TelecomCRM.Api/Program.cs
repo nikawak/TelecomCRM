@@ -1,13 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using TelecomCRM.Api.Auth;
 using TelecomCRM.Application.Queries;
+using TelecomCRM.Infrastructure;
 using TelecomCRM.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // 🔹 Add DbContext
-builder.Services.AddDbContext<TelecomDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // 🔹 Add controllers (или minimal API)
 builder.Services.AddControllers();
@@ -19,6 +23,18 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllCustomersQuery).Assembly);
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -28,6 +44,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 
+builder.Services.AddScoped<JwtService>();
 
 // 🔹 Add Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();

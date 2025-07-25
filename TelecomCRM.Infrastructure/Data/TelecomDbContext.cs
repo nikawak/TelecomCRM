@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace TelecomCRM.Infrastructure.Data
 {
-    public class TelecomDbContext : IdentityDbContext
+    public class TelecomDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Service> TelecomServices { get; set; }
@@ -13,6 +14,7 @@ namespace TelecomCRM.Infrastructure.Data
         public DbSet<NetworkDevice> NetworkDevices { get; set; }
         public DbSet<CoverageZone> CoverageZones { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
+
         public TelecomDbContext(DbContextOptions<TelecomDbContext> options)
         : base(options)
         {

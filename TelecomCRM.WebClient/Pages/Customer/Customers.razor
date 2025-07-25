@@ -1,5 +1,6 @@
 ﻿@page "/customers"
 @using TelecomCRM.WebClient.ApiClients.Interfaces
+@using TelecomCRM.WebClient.DTOs
 @inject ICustomerApiClient CustomerApiClient
 
 <h3>Customers</h3>
@@ -23,7 +24,7 @@ else
 }
 
 @code {
-    private List<CustomerDto> customers;
+    private List<CustomerDTO> customers;
 
     protected override async Task OnInitializedAsync()
     {

@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TelecomCRM.Domain\TelecomCRM.Domain.csproj" />
     <ProjectReference Include="..\TelecomCRM.Infrastructure\TelecomCRM.Infrastructure.csproj" />
   </ItemGroup>
 
