@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TelecomCRM.Api.Auth;
+using TelecomCRM.Application;
 using TelecomCRM.Application.Queries;
 using TelecomCRM.Infrastructure;
 using TelecomCRM.Infrastructure.Data;
@@ -12,16 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 🔹 Add DbContext
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication(typeof(Program).Assembly);
 
 // 🔹 Add controllers (или minimal API)
 builder.Services.AddControllers();
-
-var assembly = AppDomain.CurrentDomain.Load("TelecomCRM.Application");
-builder.Services.AddMediatR(cfg => 
-{
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);              // Api проект
-    cfg.RegisterServicesFromAssembly(typeof(GetAllCustomersQuery).Assembly);
-});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {

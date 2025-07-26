@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Commands\" />
     <Folder Include="Intefaces\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="13.0.0" />
   </ItemGroup>
 
