@@ -18,7 +18,7 @@ namespace TelecomCRM.WebClient.ApiClients
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return true;
         }
-        public async Task<bool> Register(LoginDTO dto)
+        public async Task<bool> Register(RegisterDTO dto)
         {
             var response = await _http.PostAsJsonAsync("api/auth/register", dto);
             if (!response.IsSuccessStatusCode) return false;

@@ -1,12 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TelecomCRM.Application;
 using TelecomCRM.Application.Commands;
+using TelecomCRM.Application.Commands.Customer;
 using TelecomCRM.Application.DTOs;
 
 namespace TelecomCRM.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -31,22 +33,29 @@ namespace TelecomCRM.Api.Controllers
 
             if (!result.IsSuccess)
             {
-                // Например, возвращаем 400 с ошибкой
                 return BadRequest(new { error = result.ErrorName });
             }
 
             return Ok(new { token = result.Value.Token });
         }
 
-        //[HttpPost("login")]
-        //public async Task<IActionResult> Login(LoginDTO dto)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(dto.Email);
-        //    if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
-        //        return Unauthorized();
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO dto)
+        {
+            var loginCommand = new LoginCommand
+            {
+                Email = dto.Email,
+                Password = dto.Password
+            };
+            var result = await _mediator.Send(loginCommand);
 
-        //    return Ok(new { token = _jwtService.GenerateToken(user) });
-        //}
+            if (!result.IsSuccess)
+            {
+                return BadRequest(new { error = result.ErrorName });
+            }
+
+            return Ok(new { token = result.Value.Token });
+        }
     }
 
 }

@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TelecomCRM.Application.Queries;
+using TelecomCRM.Application.Queries.Customers;
+using TelecomCRM.Application.ResponseModels;
 using TelecomCRM.Infrastructure.Data;
 
-namespace TelecomCRM.Application.Handlers
+namespace TelecomCRM.Application.Handlers.Customers
 {
     public class GetAllCustomerQueryHandler(TelecomDbContext _context
         , ILogger<GetAllCustomerQueryHandler> _logger) 
@@ -22,13 +23,14 @@ namespace TelecomCRM.Application.Handlers
                 _logger.LogInformation("Начато получение списка клиентов");
 
                 var customers = await _context.Customers.Include(x=>x.UserInfo)
+                    .Where(c=>!c.IsDeleted)
                     .Select(c => new CustomerDTO
                     {
                         Id = c.Id,
                         Name = c.FullName,
                     }).ToListAsync(cancellationToken);
 
-                if (customers == null || !customers.Any())
+                if (customers == null || customers.Count == 0)
                 {
                     _logger.LogWarning("Список клиентов пустой");
                     var list = new List<CustomerDTO>();

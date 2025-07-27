@@ -27,7 +27,7 @@
 
     private async Task HandleLogin()
     {
-        if (await AuthClient.Register(loginModel))
+        if (await AuthClient.Login(loginModel))
             Navigation.NavigateTo("/");
     }
 }

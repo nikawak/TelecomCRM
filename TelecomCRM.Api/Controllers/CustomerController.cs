@@ -1,15 +1,19 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TelecomCRM.Api.Services;
 using TelecomCRM.Application;
 using TelecomCRM.Application.Commands;
+using TelecomCRM.Application.Commands.Customer;
 using TelecomCRM.Application.DTOs;
 using TelecomCRM.Application.Queries;
+using TelecomCRM.Application.Queries.Customers;
 
 namespace TelecomCRM.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/customers")]
     public class CustomersController : TelecomBaseController
     {
         private readonly IMediator _mediator;
@@ -38,25 +42,35 @@ namespace TelecomCRM.Api.Controllers
         {
             var command = new AddCustomerCommand()
             {
-                FullName = custDTO.FullName, Address = custDTO.Address, Email = custDTO.Email, PhoneNumber = custDTO.PhoneNumber
+                FullName = custDTO.FullName,
+                Address = custDTO.Address,
+                Email = custDTO.Email,
+                PhoneNumber = custDTO.PhoneNumber
             };
             var result = await _mediator.Send(command);
 
             return HandleResult(result);
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<List<CustomerDTO>>> Update(int id, CustomerDTO custDTO)
+        public async Task<ActionResult<List<CustomerDTO>>> Update(int id, UpdateCustomerDTO custDTO)
         {
-            //var result = await _mediator.Send(new UpdateCustomerCommand());
-            await Task.CompletedTask;
-            return HandleResult(Result<int>.Failure(Errors.ServiceUnavailable));
+            var command = new UpdateCustomerCommand()
+            {
+                Id = id,
+                FullName = custDTO.FullName,
+                Address = custDTO.Address,
+                PhoneNumber = custDTO.PhoneNumber
+            };
+            var result = await _mediator.Send(command);
+            return HandleResult(result);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<CustomerDTO>>> Delete(int id)
         {
-            //var result = await _mediator.Send(new DeleteCustomerCommand());
-            await Task.CompletedTask;
-            return HandleResult(Result<int>.Failure(Errors.ServiceUnavailable));
+            var command = new DeleteCustomerCommand() { Id = id };
+
+            var result = await _mediator.Send(command);
+            return HandleResult(result);
         }
     }
 }

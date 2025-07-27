@@ -20,6 +20,20 @@ builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                context.Response.Redirect("/login");
+                return Task.CompletedTask;
+            },
+            OnChallenge = context =>
+            {
+                context.HandleResponse();
+                context.Response.Redirect("/login");
+                return Task.CompletedTask;
+            }
+        };
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -57,6 +71,19 @@ if (app.Environment.IsDevelopment())
 // 🔹 Middleware
 //app.UseResultHandling();
 app.UseHttpsRedirection();
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
+    {
+        context.Response.Redirect("/login");
+    }
+    else if (context.Response.StatusCode == StatusCodes.Status403Forbidden)
+    {
+        context.Response.Redirect("/access-denied");
+    }
+});
 app.UseAuthorization();
 
 app.UseBlazorFrameworkFiles();

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TelecomCRM.Application.Commands;
+using TelecomCRM.Application.Commands.Customer;
 
-namespace TelecomCRM.Application.Validators
+namespace TelecomCRM.Application.Validators.Customers
 {
     public class AddCustomerCommandValidator : AbstractValidator<AddCustomerCommand>
     {

@@ -1,0 +1,16 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TelecomCRM.Application.ResponseModels;
+
+namespace TelecomCRM.Application.Commands
+{
+    public class LoginCommand : IRequest<Result<UserResponse>>
+    {
+        public string Email { get;set; }
+        public string Password { get;set; } 
+    }
+}

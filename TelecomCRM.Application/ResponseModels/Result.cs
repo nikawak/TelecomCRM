@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TelecomCRM.Application
+namespace TelecomCRM.Application.ResponseModels
 {
     public class Result<TValue>
     {

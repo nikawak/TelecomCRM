@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TelecomCRM.Application;
+using TelecomCRM.Application.ResponseModels;
 
 namespace TelecomCRM.Api.Services
 {

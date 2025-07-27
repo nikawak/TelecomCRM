@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TelecomCRM.Application.Queries;
+using TelecomCRM.Application.Queries.Customers;
+using TelecomCRM.Application.ResponseModels;
 using TelecomCRM.Infrastructure.Data;
 
-namespace TelecomCRM.Application.Handlers
+namespace TelecomCRM.Application.Handlers.Customers
 {
     public class GetCustomerByIdQueryHandler(TelecomDbContext _context
         , ILogger<GetCustomerByIdQueryHandler> _logger) 
