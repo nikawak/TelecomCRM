@@ -26,11 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\TelecomCRM.Application\TelecomCRM.Application.csproj" />
+    <ProjectReference Include="..\TelecomCRM.Infrastructure\TelecomCRM.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TelecomCRM.Application\TelecomCRM.Application.csproj" />
+    <Folder Include="Auth\" />
   </ItemGroup>
 
 </Project>

@@ -6,21 +6,26 @@ using System.Threading.Tasks;
 
 namespace TelecomCRM.Application
 {
-    public class Result<T>
+    public class Result<TValue>
     {
         public bool IsSuccess { get; }
-        public T Value { get; }
-        public string? Error { get; }
+        public TValue? Value { get; }
+        public Error? ErrorName { get; }
 
-        public static Result<T> Success(T value) => new Result<T>(true, value, null);
-        public static Result<T> Failure(string error) => new Result<T>(false, default!, error);
-
-        private Result(bool isSuccess, T value, string? error)
+        private Result(TValue? value, Error? error, bool isSuccess)
         {
-            IsSuccess = isSuccess;
             Value = value;
-            Error = error;
+            ErrorName = error;
+            IsSuccess = isSuccess;
         }
+
+        public static Result<TValue> Success(TValue value) =>
+            new(value, default, true);
+
+        public static Result<TValue> Failure(Error error) =>
+            new(default, error, false);
     }
 
 }
+
+

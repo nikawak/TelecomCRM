@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TelecomCRM.Infrastructure.Data
 {
-    public class TelecomDbContext : IdentityDbContext<IdentityUser>
+    public class TelecomDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Service> TelecomServices { get; set; }
@@ -18,6 +18,18 @@ namespace TelecomCRM.Infrastructure.Data
         public TelecomDbContext(DbContextOptions<TelecomDbContext> options)
         : base(options)
         {
+
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Customer>()
+                .HasOne<IdentityUser>(c => c.UserInfo)
+                .WithMany() // или WithOne(), если связь 1:1
+                .HasForeignKey(c => c.IdentityId)
+                .IsRequired();
+        }
+
     }
 }

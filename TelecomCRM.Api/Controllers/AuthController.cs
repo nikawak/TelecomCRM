@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TelecomCRM.Api.Auth;
+using TelecomCRM.Application.Commands;
 using TelecomCRM.Application.DTOs;
 
 namespace TelecomCRM.Api.Controllers
@@ -9,36 +10,43 @@ namespace TelecomCRM.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly JwtService _jwtService;
-
-        public AuthController(UserManager<IdentityUser> userManager, JwtService jwtService)
+        private readonly IMediator _mediator;
+        public AuthController(IMediator mediator)
         {
-            _userManager = userManager;
-            _jwtService = jwtService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDTO dto)
+        public async Task<IActionResult> Register(CreateCustomerDTO dto)
         {
-            var user = new IdentityUser { UserName = dto.Email.Split('@')[0], Email = dto.Email };
-            var result = await _userManager.CreateAsync(user, dto.Password);
+            var customerCommand = new AddCustomerCommand()
+            {
+                Address = dto.Address,
+                Email = dto.Email,
+                FullName = dto.FullName, 
+                Password = dto.Password,    
+                PhoneNumber = dto.PhoneNumber,
+            };
+            var result = await _mediator.Send(customerCommand);
 
-            if (!result.Succeeded)
-                return BadRequest(result.Errors);
+            if (!result.IsSuccess)
+            {
+                // Например, возвращаем 400 с ошибкой
+                return BadRequest(new { error = result.ErrorName });
+            }
 
-            return Ok(new { token = _jwtService.GenerateToken(user) });
+            return Ok(new { token = result.Value.Token });
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDTO dto)
-        {
-            var user = await _userManager.FindByEmailAsync(dto.Email);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
-                return Unauthorized();
+        //[HttpPost("login")]
+        //public async Task<IActionResult> Login(LoginDTO dto)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(dto.Email);
+        //    if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
+        //        return Unauthorized();
 
-            return Ok(new { token = _jwtService.GenerateToken(user) });
-        }
+        //    return Ok(new { token = _jwtService.GenerateToken(user) });
+        //}
     }
 
 }

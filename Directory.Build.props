@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <!-- ѕуть к проекту с DbContext -->
+    <EFProject>TelecomCRM.Infrastructure</EFProject>
+    
+    <!-- ѕуть к проекту с Program.cs / Startup.cs -->
+    <EFStartupProject>TelecomCRM.Api</EFStartupProject>
+  </PropertyGroup>
+</Project>

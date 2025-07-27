@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace TelecomCRM.Application.Queries
 {
-    public record GetAllCustomersQuery : IRequest<Result<List<CustomerDTO>>>;
+    public class GetCustomerByIdQuery : IRequest<Result<CustomerDTO>>
+    {
+        public int Id { get; set; }
+    }
 }

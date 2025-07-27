@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TelecomCRM.Api.Auth;
+using TelecomCRM.Api.Services;
 using TelecomCRM.Application;
 using TelecomCRM.Application.Queries;
 using TelecomCRM.Infrastructure;
@@ -55,6 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // 🔹 Middleware
+//app.UseResultHandling();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 

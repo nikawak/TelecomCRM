@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,10 +14,12 @@ using TelecomCRM.Infrastructure.Data;
 namespace TelecomCRM.Application.Handlers
 {
     public class AddCustomerCommandHandler(TelecomDbContext _context
-        , ILogger<AddCustomerCommandHandler> _logger)
-        : IRequestHandler<AddCustomerCommand, Result<int>>
+        , ILogger<AddCustomerCommandHandler> _logger
+        , UserManager<IdentityUser> _userManager
+        , JwtService _jwtService)
+        : IRequestHandler<AddCustomerCommand, Result<RegisterUserResponse>>
     {
-        public async Task<Result<int>> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Result<RegisterUserResponse>> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -26,32 +29,45 @@ namespace TelecomCRM.Application.Handlers
                 {
                     var errors = validationResult.Errors.Select(e => e.ErrorMessage);
                     _logger.LogWarning($"Валидация не пройдена: {errors}", errors);
-                    return Result<int>.Failure(string.Join("; ", errors));
+                    //var errorsMessage = string.Join("; ", errors);
+                    return Result<RegisterUserResponse>.Failure(Errors.Validation);
                 }
+                var user = new IdentityUser { UserName = request.Email.Split('@')[0], Email = request.Email };
+                var result = await _userManager.CreateAsync(user, request.Password);
+
+                if(!result.Succeeded)
+                {
+                    var errors = string.Join("; ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
+                    _logger.LogWarning($"Ошибка при создании Identity {errors}");
+                    return Result<RegisterUserResponse>.Failure(Errors.Validation);
+                }
+                var token = _jwtService.GenerateToken(user);
 
                 var customer = new Customer
                 {
+                    Address = request.Address,
+                    IdentityId = user.Id, 
                     FullName = request.FullName,
-                    Email = request.Email,
-                    PhoneNumber = request.PhoneNumber,
-                    Address = request.Address
                 };
+
                 var res = await _context.AddAsync(customer, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+
                 if (res.Entity.Id <= 0)
                 {
                     _logger.LogWarning("Созданный клиент имеет невалидный Id: {Id}", res.Entity.Id);
-                    return Result<int>.Failure("Id <= 0");
+                    return Result<RegisterUserResponse>.Failure(new Error("User.InvalidId", "Невалидный id", 400));
                 }
 
-                await _context.SaveChangesAsync(cancellationToken);
                 _logger.LogInformation("Клиент успешно добавлен с Id {Id}", res.Entity.Id);
-                return Result<int>.Success(res.Entity.Id);
+                var userResponse = new RegisterUserResponse() { Id = res.Entity.Id, Token = token };
+                return Result<RegisterUserResponse>.Success(userResponse);
 
             }
             catch(Exception ex) 
             {
                 _logger.LogError(ex, "Ошибка при добавлении клиента");
-                return Result<int>.Failure(ex.Message);
+                return Result<RegisterUserResponse>.Failure(Errors.Unknown);
             }
         }
     }

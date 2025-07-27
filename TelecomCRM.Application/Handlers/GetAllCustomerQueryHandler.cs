@@ -11,15 +11,17 @@ using TelecomCRM.Infrastructure.Data;
 
 namespace TelecomCRM.Application.Handlers
 {
-    public class GetAllCustomerQueryHandler(TelecomDbContext _context, ILogger<GetAllCustomerQueryHandler> _logger) : IRequestHandler<GetAllCustomersQuery, List<CustomerDTO>>
+    public class GetAllCustomerQueryHandler(TelecomDbContext _context
+        , ILogger<GetAllCustomerQueryHandler> _logger) 
+        : IRequestHandler<GetAllCustomersQuery, Result<List<CustomerDTO>>>
     {
-        public async Task<List<CustomerDTO>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<CustomerDTO>>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Начато получение списка клиентов");
-
             try
             {
-                var customers = await _context.Customers
+                _logger.LogInformation("Начато получение списка клиентов");
+
+                var customers = await _context.Customers.Include(x=>x.UserInfo)
                     .Select(c => new CustomerDTO
                     {
                         Id = c.Id,
@@ -29,16 +31,17 @@ namespace TelecomCRM.Application.Handlers
                 if (customers == null || !customers.Any())
                 {
                     _logger.LogWarning("Список клиентов пустой");
-                    return new List<CustomerDTO>();
+                    var list = new List<CustomerDTO>();
+                    return Result<List<CustomerDTO>>.Success(list);
                 }
 
                 _logger.LogInformation("Получено {Count} клиентов", customers.Count);
-                return customers;
+                return Result<List<CustomerDTO>>.Success(customers);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка при получении списка клиентов");
-                throw; // пробрасываем дальше или можно вернуть пустой список/ошибку в Result, если используешь
+                return Result<List<CustomerDTO>>.Failure(Errors.Unknown);
             }
         }
     }
