@@ -12,7 +12,7 @@ using TelecomCRM.Application.Queries.Customers;
 namespace TelecomCRM.Api.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize (Roles = "User")]
     [Route("api/customers")]
     public class CustomersController : TelecomBaseController
     {
