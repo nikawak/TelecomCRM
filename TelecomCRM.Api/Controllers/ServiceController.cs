@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TelecomCRM.Api.Services;
+using TelecomCRM.Application.Commands.Services;
+using TelecomCRM.Application.DTOs;
+using TelecomCRM.Application.Handlers.Services;
 using TelecomCRM.Application.Queries.Customers;
+using TelecomCRM.Application.Queries.Services;
 
 namespace TelecomCRM.Api.Controllers
 {
@@ -17,16 +21,25 @@ namespace TelecomCRM.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public async Task<ActionResult<List<CustomerDTO>>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(new GetAllServicesQuery());
+            return HandleResult(result);
         }
-        [HttpPost]
+        [HttpPost("")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<CustomerDTO>>> Create()
+        public async Task<ActionResult<List<CustomerDTO>>> Create(CreateServiceDTO serviceDTO)
         {
-            throw new NotImplementedException();
+            var command = new AddServiceCommand()
+            {
+                Description = serviceDTO.Description,
+                MonthlyFee = serviceDTO.MonthlyFee,
+                Name = serviceDTO.Name,
+            };
+
+            var result = await _mediator.Send(command);
+            return HandleResult(result);
         }
     }
 }

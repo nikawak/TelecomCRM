@@ -37,7 +37,7 @@ namespace TelecomCRM.Application.Handlers.Customers
                     return Result<List<CustomerDTO>>.Success(list);
                 }
 
-                _logger.LogInformation("Получено {Count} клиентов", customers.Count);
+                _logger.LogInformation($"Получено {customers.Count} клиентов", customers.Count);
                 return Result<List<CustomerDTO>>.Success(customers);
             }
             catch (Exception ex)
