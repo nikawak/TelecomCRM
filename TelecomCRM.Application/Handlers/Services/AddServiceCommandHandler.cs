@@ -49,7 +49,7 @@ namespace TelecomCRM.Application.Handlers.Services
                     return Result<int>.Failure(new Error("Service.InvalidId", "Невалидный id", 400));
                 }
 
-                _logger.LogInformation("Сервси успешно добавлен с Id {Id}", res.Entity.Id);
+                _logger.LogInformation("Сервис успешно добавлен с Id {Id}", res.Entity.Id);
                 return Result<int>.Success(res.Entity.Id);
             }
             catch (Exception ex)

@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TelecomCRM.Api.Services;
+using TelecomCRM.Application.Commands.Subscriptions;
+using TelecomCRM.Application.DTOs;
+using TelecomCRM.Application.Queries.Subscription;
 
 namespace TelecomCRM.Api.Controllers
 {
@@ -19,18 +22,37 @@ namespace TelecomCRM.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CustomerDTO>>> GetAll()
         {
-            throw new NotImplementedException();
+            string authHeader = Request.Headers["Authorization"];
+            string token = authHeader.Substring("Bearer ".Length).Trim();
 
+            var query = new GetAllUserSubscriptionsQuery() { UserToken = token };
+
+            var result = await _mediator.Send(query);
+            return HandleResult(result);
+            
         }
         [HttpPost]
-        public async Task<ActionResult<List<CustomerDTO>>> Create()
+        public async Task<ActionResult<List<CustomerDTO>>> Create(CreateSubscriptionDTO subscriptionDTO)
         {
-            throw new NotImplementedException();
+            var command = new UserSubscribeCommand()
+            {
+                ServiceId = subscriptionDTO.ServiceId,
+                UserId = subscriptionDTO.UserId,
+            };
+
+            var result = await _mediator.Send(command);
+            return HandleResult(result);
         }
         [HttpDelete("{subscriptionId}")]
         public async Task<ActionResult<List<CustomerDTO>>> Delete(int subscriptionId)
         {
-            throw new NotImplementedException();
+            var command = new UserUnsubscribeCommand()
+            {
+                Id = subscriptionId
+            };
+
+            var result = await _mediator.Send(command);
+            return HandleResult(result);
         }
     }
 }

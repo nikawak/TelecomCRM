@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TelecomCRM.Application.DTOs;
 
 namespace TelecomCRM.Application
 {
@@ -36,6 +37,17 @@ namespace TelecomCRM.Application
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        public UserCredentialsDTO ParseToken(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            var id = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var email = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            var userCred = new UserCredentialsDTO() { IdentityId = id, Email = email };
+            return userCred;
         }
     }
 }
