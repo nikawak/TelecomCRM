@@ -1,0 +1,27 @@
+﻿<!-- Shared/NavMenu.razor -->
+<div class="sidebar bg-dark text-white d-flex flex-column p-3" style="width: 250px; height: 100vh;">
+    <h4 class="text-white mb-4">📡 Telecom CRM</h4>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/">
+                <i class="bi bi-house-door-fill me-2"></i> Главная
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/profile">
+                <i class="bi bi-person-circle me-2"></i> Личный кабинет
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/customers">
+                <i class="bi bi-bag-check me-2"></i> Клиенты
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link text-white" activeClass="active bg-primary" href="/services">
+                <i class="bi bi-headset me-2"></i> Сервисы
+            </NavLink>
+        </li>
+    </ul>
+</div>

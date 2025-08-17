@@ -11,7 +11,6 @@ using TelecomCRM.Application.Queries.Services;
 namespace TelecomCRM.Api.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "User")]
     [Route("api/services")]
     public class ServiceController : TelecomBaseController
     {
@@ -28,8 +27,7 @@ namespace TelecomCRM.Api.Controllers
             return HandleResult(result);
         }
         [HttpPost("")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<CustomerDTO>>> Create(CreateServiceDTO serviceDTO)
+        public async Task<ActionResult<int>> Create(CreateServiceDTO serviceDTO)
         {
             var command = new AddServiceCommand()
             {

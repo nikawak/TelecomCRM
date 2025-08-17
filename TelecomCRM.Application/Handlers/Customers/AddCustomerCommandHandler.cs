@@ -37,7 +37,9 @@ namespace TelecomCRM.Application.Handlers.Customers
                 var user = new IdentityUser { UserName = request.Email.Split('@')[0], Email = request.Email, PhoneNumber = request.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, request.Password);
 
-                if(!result.Succeeded)
+                await _userManager.AddToRoleAsync(user, "User");
+
+                if (!result.Succeeded)
                 {
                     var errors = string.Join("; ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
                     _logger.LogWarning($"Ошибка при создании Identity {errors}");

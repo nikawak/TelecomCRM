@@ -36,7 +36,7 @@ namespace TelecomCRM.Api.Controllers
                 return BadRequest(new { error = result.ErrorName });
             }
 
-            return Ok(new { token = result.Value.Token });
+            return Ok(new { result.Value.Token });
         }
 
         [HttpPost("login")]
@@ -54,7 +54,7 @@ namespace TelecomCRM.Api.Controllers
                 return BadRequest(new { error = result.ErrorName });
             }
 
-            return Ok(new { token = result.Value.Token });
+            return Ok(new { result.Value.Token });
         }
     }
 

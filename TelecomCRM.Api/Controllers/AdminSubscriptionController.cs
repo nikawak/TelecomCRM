@@ -6,7 +6,6 @@ using TelecomCRM.Api.Services;
 namespace TelecomCRM.Api.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "Admin")]
     [Route("api/admin/subscription")]
     public class AdminSubscriptionController : TelecomBaseController
     {

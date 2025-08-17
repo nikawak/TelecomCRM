@@ -16,12 +16,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelecomCRM.Tests", "Telecom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelecomCRM.Application", "TelecomCRM.Application\TelecomCRM.Application.csproj", "{308E422C-BEC4-4C94-986D-7D3B9253D47E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelecomCRM.WebClient", "TelecomCRM.WebClient\TelecomCRM.WebClient.csproj", "{B7185610-D3E2-4C11-AFFF-D92607A5F912}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{754FC069-D67B-A9D7-50A1-8D1CA196D8F1}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelecomCRM.WebServer", "WebServer\TelecomCRM.WebServer.csproj", "{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,18 +93,18 @@ Global
 		{308E422C-BEC4-4C94-986D-7D3B9253D47E}.Release|x64.Build.0 = Release|Any CPU
 		{308E422C-BEC4-4C94-986D-7D3B9253D47E}.Release|x86.ActiveCfg = Release|Any CPU
 		{308E422C-BEC4-4C94-986D-7D3B9253D47E}.Release|x86.Build.0 = Release|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Debug|x64.Build.0 = Debug|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Debug|x86.Build.0 = Debug|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Release|x64.ActiveCfg = Release|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Release|x64.Build.0 = Release|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Release|x86.ActiveCfg = Release|Any CPU
-		{B7185610-D3E2-4C11-AFFF-D92607A5F912}.Release|x86.Build.0 = Release|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Debug|x64.Build.0 = Debug|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Debug|x86.Build.0 = Debug|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Release|x64.ActiveCfg = Release|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Release|x64.Build.0 = Release|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Release|x86.ActiveCfg = Release|Any CPU
+		{94B3B163-B14E-42B9-ACE5-D9C71F1F6BC8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

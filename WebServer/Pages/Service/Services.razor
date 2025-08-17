@@ -1,0 +1,132 @@
+﻿@page "/services"
+@using TelecomCRM.WebServer.ApiClients
+@using TelecomCRM.WebServer.DTOs
+@inject ServiceApiClient ApiClient
+
+<h3>Сервисы</h3>
+
+<button class="btn btn-primary mb-3" @onclick="ShowCreateModal">Создать новый сервис</button>
+
+@if (services == null)
+{
+    <p>Загрузка...</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var service in services)
+        {
+            <div class="mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@service.Name</h5>
+                        <p class="card-text">@service.Description</p>
+                        <p class="card-text text-muted">Цена: @service.MonthlyFee.ToString("C")/мес</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- Модальное окно для создания сервиса -->
+@if (showCreateModal)
+{
+    <div class="modal show d-block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Создать новый сервис</h5>
+                    <button type="button" class="close" @onclick="CloseCreateModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@newService" OnValidSubmit="@HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <div class="form-group">
+                            <label for="serviceName">Название</label>
+                            <InputText id="serviceName" @bind-Value="newService.Name" class="form-control" />
+                            <ValidationMessage For="@(() => newService.Name)" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="serviceDescription">Описание</label>
+                            <InputTextArea id="serviceDescription" @bind-Value="newService.Description" class="form-control" />
+                            <ValidationMessage For="@(() => newService.Description)" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="servicePrice">Месячная стоимость</label>
+                            <InputNumber id="servicePrice" @bind-Value="newService.MonthlyFee" class="form-control" />
+                            <ValidationMessage For="@(() => newService.MonthlyFee)" />
+                        </div>
+
+                        @if (errorMessage != null)
+                        {
+                            <div class="alert alert-danger">@errorMessage</div>
+                        }
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Создать</button>
+                            <button type="button" class="btn btn-secondary" @onclick="CloseCreateModal">Отмена</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<ServiceDTO> services;
+    private bool showCreateModal = false;
+    private CreateServiceDTO newService = new CreateServiceDTO();
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadServices();
+    }
+
+    private async Task LoadServices()
+    {
+        try
+        {
+            services = await ApiClient.GetServicesAsync();
+            errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ошибка при загрузке сервисов: {ex.Message}";
+        }
+    }
+
+    private void ShowCreateModal()
+    {
+        newService = new CreateServiceDTO();
+        showCreateModal = true;
+        errorMessage = null;
+    }
+
+    private void CloseCreateModal()
+    {
+        showCreateModal = false;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            await ApiClient.CreateServiceAsync(newService);
+            await LoadServices();
+            showCreateModal = false;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ошибка при создании сервиса: {ex.Message}";
+        }
+    }
+}

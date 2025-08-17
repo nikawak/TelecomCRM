@@ -9,7 +9,6 @@ using TelecomCRM.Application.Queries.Subscription;
 namespace TelecomCRM.Api.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "User")]
     [Route("api/subscriptions")]
     public class SubscriptionController : TelecomBaseController
     {
@@ -32,12 +31,15 @@ namespace TelecomCRM.Api.Controllers
             
         }
         [HttpPost]
-        public async Task<ActionResult<List<CustomerDTO>>> Create(CreateSubscriptionDTO subscriptionDTO)
+        public async Task<ActionResult<List<CustomerDTO>>> Create(int serviceId)
         {
+            string authHeader = Request.Headers["Authorization"];
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+
             var command = new UserSubscribeCommand()
             {
-                ServiceId = subscriptionDTO.ServiceId,
-                UserId = subscriptionDTO.UserId,
+                ServiceId = serviceId,
+                Token = token,
             };
 
             var result = await _mediator.Send(command);

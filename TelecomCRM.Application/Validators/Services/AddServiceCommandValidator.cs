@@ -16,12 +16,12 @@ namespace TelecomCRM.Application.Validators.Services
             RuleFor(x=>x.Name)
                 .NotEmpty().WithMessage("Не может быть пустым")
                 .MaximumLength(50).WithMessage("Не может быть таким длинным")
-                .MinimumLength(10).WithMessage("Не может быть таким коротким");
+                .MinimumLength(3).WithMessage("Не может быть таким коротким");
 
-            RuleFor(x => x.Name)
+            RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Не может быть пустым")
                 .MaximumLength(500).WithMessage("Не может быть таким длинным")
-                .MinimumLength(50).WithMessage("Не может быть таким коротким");
+                .MinimumLength(3).WithMessage("Не может быть таким коротким");
 
             RuleFor(x => x.MonthlyFee)
                 .NotEmpty().WithMessage("Не может быть пустым")

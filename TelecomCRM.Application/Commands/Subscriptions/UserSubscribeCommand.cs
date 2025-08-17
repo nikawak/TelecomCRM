@@ -10,7 +10,7 @@ namespace TelecomCRM.Application.Commands.Subscriptions
 {
     public class UserSubscribeCommand : IRequest<Result<Unit>>
     {
-        public int UserId { get; set; }
         public int ServiceId { get; set; }
+        public string Token { get; set; }
     }
 }

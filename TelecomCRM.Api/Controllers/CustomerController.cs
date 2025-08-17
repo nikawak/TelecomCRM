@@ -12,8 +12,8 @@ using TelecomCRM.Application.Queries.Customers;
 namespace TelecomCRM.Api.Controllers
 {
     [ApiController]
-    [Authorize (Roles = "User")]
     [Route("api/customers")]
+    [Authorize(Roles ="User")]
     public class CustomersController : TelecomBaseController
     {
         private readonly IMediator _mediator;
@@ -22,7 +22,7 @@ namespace TelecomCRM.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public async Task<ActionResult<List<CustomerDTO>>> GetAll()
         {
             var result = await _mediator.Send(new GetAllCustomersQuery());

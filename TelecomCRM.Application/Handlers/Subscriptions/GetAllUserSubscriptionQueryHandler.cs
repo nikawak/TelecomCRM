@@ -37,7 +37,7 @@ namespace TelecomCRM.Application.Handlers.Subscriptions
                 }
 
                 var customer = await _dbContext.Customers.FirstOrDefaultAsync(x => x.IdentityId == cred.IdentityId);
-                if (cred == null)
+                if (customer == null)
                 {
                     _logger.LogWarning("customer не найден");
                     return Result<List<SubscriptionDTO>>.Failure(Errors.NotFound("customer"));

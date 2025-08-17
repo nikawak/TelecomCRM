@@ -27,7 +27,7 @@ namespace TelecomCRM.Application.Handlers.Services
 
                 if (!validationResult.IsValid)
                 {
-                    var errors = validationResult.Errors.Select(e => e.ErrorMessage);
+                    var errors = string.Join(";", validationResult.Errors.Select(e => e.ErrorMessage));
                     _logger.LogWarning($"Валидация не пройдена: {errors}", errors);
                     //var errorsMessage = string.Join("; ", errors);
                     return Result<int>.Failure(Errors.Validation);
@@ -42,6 +42,7 @@ namespace TelecomCRM.Application.Handlers.Services
                 };
 
                 var res = await _dbContext.TelecomServices.AddAsync(model);
+                await _dbContext.SaveChangesAsync();
 
                 if (res.Entity.Id <= 0)
                 {

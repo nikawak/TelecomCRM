@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using TelecomCRM.WebClient;
-using TelecomCRM.WebClient.ApiClients;
-using TelecomCRM.WebClient.ApiClients.Interfaces;
+using TelecomCRM.WebServer;
+using TelecomCRM.WebServer.ApiClients;
+using TelecomCRM.WebServer.ApiClients.Interfaces;
 using TelecomCRM.WebClient.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -18,11 +19,16 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://
 
 builder.Services.AddBlazoredLocalStorage();
 
+
+
 // –егистрируем свои сервисы (например, API клиенты)
+builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
 
 builder.Services.AddScoped<ICustomerApiClient, CustomerApiClient>();
 builder.Services.AddScoped<AuthApiClient>();
+builder.Services.AddScoped<ServiceApiClient>();
+builder.Services.AddScoped<SubscriptionApiClient>();
 
 await builder.Build().RunAsync();

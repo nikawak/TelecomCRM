@@ -1,0 +1,51 @@
+﻿@page "/register"
+@using TelecomCRM.WebServer.ApiClients
+@using TelecomCRM.WebServer.DTOs
+
+<EditForm Model="registerModel" OnValidSubmit="HandleLogin" class="w-100" style="max-width: 400px; margin: auto; margin-top: 50px;">
+    <DataAnnotationsValidator />   
+
+    <div class="mb-3">
+        <label for="email" class="form-label">FullName</label>
+        <InputText id="email" class="form-control" @bind-Value="registerModel.FullName" />
+        <ValidationMessage For="@(() => registerModel.FullName)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <InputText id="email" class="form-control" @bind-Value="registerModel.Email" />
+        <ValidationMessage For="@(() => registerModel.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Phone</label>
+        <InputText id="email" class="form-control" @bind-Value="registerModel.PhoneNumber" />
+        <ValidationMessage For="@(() => registerModel.PhoneNumber)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Address</label>
+        <InputText id="email" class="form-control" @bind-Value="registerModel.Address" />
+        <ValidationMessage For="@(() => registerModel.Address)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Пароль</label>
+        <InputText id="password" class="form-control" @bind-Value="registerModel.Password" type="password" />
+        <ValidationMessage For="@(() => registerModel.Password)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Войти</button>
+</EditForm>
+
+@code {
+    private RegisterDTO registerModel = new();
+    [Inject] public AuthApiClient AuthClient { get; set; }
+    [Inject] public NavigationManager Navigation { get; set; }
+
+    private async Task HandleLogin()
+    {
+        if (await AuthClient.Register(registerModel))
+            Navigation.NavigateTo("/");
+    }
+}

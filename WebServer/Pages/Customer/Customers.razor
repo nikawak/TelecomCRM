@@ -1,0 +1,42 @@
+﻿@page "/customers"
+@using TelecomCRM.WebServer.ApiClients.Interfaces
+@using TelecomCRM.WebServer.DTOs
+@inject ICustomerApiClient CustomerApiClient
+@inject ILogger<Customers> Logger
+
+<h3>Customers</h3>
+<h1 style="color: red;">Компонент Customers загружен!</h1>
+@if (isLoading)
+{
+    <p><em>Loading...</em></p>
+}
+else if (customers == null || customers.Count == 0)
+{
+    <p>No customers found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var customer in customers)
+        {
+            <li>@customer.Name</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<CustomerDTO> customers;
+    private bool isLoading = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            customers = await CustomerApiClient.GetCustomersAsync();
+            isLoading = false; // Добавьте эту строку
+            StateHasChanged();
+        }
+    }
+
+
+}
